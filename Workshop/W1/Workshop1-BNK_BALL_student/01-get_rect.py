@@ -55,6 +55,9 @@ while running:
         if ballrect.left < 0 or ballrect.right > width:
             speed[0] = -speed[0]
 
+        # if ballrect.top < 0 or ballrect.bottom > height:
+        #     speed[1] = -speed[1]
+
         ###########################################################################
         # TO DO 1 : จงทำให้บอลชิ่งไปมาในกรอบสี่เหลี่ยม (ไม่ตกกรอบ บน-ล่าง) [ top , bottom ]
         # Hint [ทำคล้ายๆกับข้างบน speed[0] หมายถึงแกน x และ speed[1] หมายถึงแกน y]
