@@ -4,6 +4,21 @@ import pygame as pg
 def distance(a, b):
     return ((a[0]-b[0])**2 + (a[1]-b[1])**2)**0.5
 
+def sgn(x):
+    if x >= 0:
+        return 1
+    else:
+        return 0
+
+def calculate_di(a, b):
+    if sgn(a[0]) != sgn(b[0]):
+        a[0] *= -1
+        b[0] *= -1
+    
+    if sgn(a[1]) != sgn(b[1]):
+        a[1] *= -1
+        b[1] *= -1
+
 PATH = ".\Workshop\W1\Workshop1-BNK_BALL_student\source"
 
 # TODO 1 : กำหนด width : 1000 , height : 600 และ FPS : 60
@@ -138,25 +153,26 @@ while running:
         ball2_cen = [ball2_rect.left + ball2_radius, ball2_rect.top + ball2_radius]
         ball3_cen = [ball3_rect.left + ball3_radius, ball3_rect.top + ball3_radius]
         if (distance(ball1_cen, ball2_cen) <= ball1_radius + ball2_radius):
-            ball1_speed[0] *= -1
-            ball1_speed[1] *= -1
-            ball2_speed[0] *= -1
-            ball2_speed[1] *= -1
+            calculate_di(ball1_speed, ball2_speed)
+            # ball1_speed[0] *= -1
+            # ball1_speed[1] *= -1
+            # ball2_speed[0] *= -1
+            # ball2_speed[1] *= -1
             soundeffect.play()
         
-        if (distance(ball1_cen, ball3_cen) <= ball1_radius + ball3_radius):
-            ball1_speed[0] *= -1
-            ball1_speed[1] *= -1
-            ball3_speed[0] *= -1
-            ball3_speed[1] *= -1
-            soundeffect.play()
+        # if (distance(ball1_cen, ball3_cen) <= ball1_radius + ball3_radius):
+        #     ball1_speed[0] *= -1
+        #     ball1_speed[1] *= -1
+        #     ball3_speed[0] *= -1
+        #     ball3_speed[1] *= -1
+        #     soundeffect.play()
         
-        if (distance(ball2_cen, ball3_cen) <= ball2_radius + ball3_radius):
-            ball2_speed[0] *= -1
-            ball2_speed[1] *= -1
-            ball3_speed[0] *= -1
-            ball3_speed[1] *= -1
-            soundeffect.play()
+        # if (distance(ball2_cen, ball3_cen) <= ball2_radius + ball3_radius):
+        #     ball2_speed[0] *= -1
+        #     ball2_speed[1] *= -1
+        #     ball3_speed[0] *= -1
+        #     ball3_speed[1] *= -1
+        #     soundeffect.play()
         # print(ball3_rect.left, ball3_rect.right)
 
 
