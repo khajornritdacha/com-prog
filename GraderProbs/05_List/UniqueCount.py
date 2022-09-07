@@ -1,0 +1,5 @@
+arr = list(map(int, input().split()))
+arr = list( set(arr) )
+print(len(arr))
+arr.sort()
+print(arr[:10])
