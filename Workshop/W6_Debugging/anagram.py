@@ -7,10 +7,11 @@ def get_key(string):
   alphabet_count = [0 for i in range(26)]
   for ch in string.upper():
     # check if ch is a English capital letter
+    
     if(ord('A') <= ord(ch) <= ord('Z')):
-      alphabet_count[ord(ch)] = 1
+      alphabet_count[ord(ch) - ord('A')] += 1
   # convert list of int into string
-  return '_'.join([ch for ch in alphabet_count])
+  return '_'.join([str(ch) for ch in alphabet_count])
 
 
 # This function finds anagram of a given target word
@@ -19,6 +20,8 @@ def find_anagram(x):
   # get key of input x
   key = get_key(x.strip())
   # return all possible anagram of x
+  if key not in words:
+    return []
   return words[key]
 
 

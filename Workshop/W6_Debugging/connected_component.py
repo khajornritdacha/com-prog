@@ -5,29 +5,30 @@ import random
 import numpy as np
 
 def find_neighbours(rows, cols, color):
+  
   #check whether upper cell is black
-  if matrix[rows-1][cols] != 0:
+  if rows-1 >= 0 and matrix[rows-1][cols] not in [0, color]:
     matrix[rows-1][cols] = color
     #call checkNeighbours function from within itself
-    check_neighbours(rows-1, cols, color)
+    find_neighbours(rows-1, cols, color)
 
   #check whether lower cell is black
-  if matrix[rows+1][cols] != 0:
+  if rows+1 < len(matrix) and matrix[rows+1][cols] not in [0, color]:
     matrix[rows+1][cols] = color
     #call checkNeighbours function from within itself
-    check_neighbours(rows+1, cols, color)
+    find_neighbours(rows+1, cols, color)
 
   #check whether left cell is black
-  if matrix[rows][cols-1] != 0:
+  if cols-1 >= 0 and matrix[rows][cols-1] not in [0, color]:
     matrix[rows][cols-1] = color
     #call checkNeighbours function from within itself
-    check_neighbours(rows, cols-1, color)
+    find_neighbours(rows, cols-1, color)
 
   #check whether right cell is black
-  if matrix[rows][cols+1] != 0:
+  if cols+1 < len(matrix[rows]) and matrix[rows][cols+1] not in [0, color]:
     matrix[rows][cols+1] = color
     #call checkNeighbours function from within itself
-    check_neighbours(rows, cols+1, color)
+    find_neighbours(rows, cols+1, color)
 
 
 # Create a random hexcolor code
@@ -36,25 +37,32 @@ def random_color(colorset):
     random_color = "#"+''.join([random.choice('0123456789ABCDEF') for i in range(6)])
     if random_color != '#FFFFFF' and random_color not in colorset:
       colorset.add(random_color)
-      return "#"+''.join([random.choice('0123456789ABCDEF') for i in range(6)])
+      return random_color
+      # return "#"+''.join([random.choice('0123456789ABCDEF') for i in range(6)])
 
 
 def neighbours(matrix):
   # Create for loop that run through every cell in matrix
-  # Generate color, assign color to the cell and call check_neighbours when find an uncolored black cell.
+  # Generate color, assign color to the cell and call find_neighbours when find an uncolored black cell.
   # Assign white color when find a white cell with mcolors.to_rgb('#FFFFFF').
   colorset = set()
+  white = []
   for row in range(0,len(matrix)):
     for column in range(0,len(matrix[row])):
       # found uncolored black cell
       if matrix[row][column] == 1:
         #create random color with 
-        color =  mcolors.to_rgb(random_color(colorset))
-        matrix[row][column] = color
+        color = mcolors.to_rgb(random_color(colorset))
+
         # expands color to neighbours
-        check_neighbours(row, column, color)
+        matrix[row][column] = color
+        find_neighbours(row, column, color)
+      
       # found uncolored white cell
-      elif matrix[row][column] == 0 :
+      elif matrix[row][column] == 0:
+        white.append([row, column])
+
+  for row, column in white:
         matrix[row][column] =  mcolors.to_rgb('#FFFFFF')
 
 
@@ -70,13 +78,14 @@ if __name__ == '__main__':
   # Initialized input matrix
   matrix = [[0,1,0,0,1,1],[1,1,0,0,0,1],[1,0,0,1,0,1],[0,0,1,1,1,0],[1,0,1,0,0,1],[1,1,1,0,1,1]];
   neighbours(matrix)
-  plt.imshow(matrix)
-  plt.show()
+  # plt.imshow(matrix)
+  # plt.show()
 
 
   # Create random matrix 
-  matrix = np.random.choice([0, 1], size=(20,20), p=[2./4, 2./4]).tolist()
-  neighbours(matrix)
-  plt.figure(figsize=(8,8))
-  plt.imshow(matrix)
-  plt.show()
+  for i in range(100):
+    matrix = np.random.choice([0, 1], size=(20,20), p=[2./4, 2./4]).tolist()
+    neighbours(matrix)
+    plt.figure(figsize=(8,8))
+    plt.imshow(matrix)
+    plt.show()
