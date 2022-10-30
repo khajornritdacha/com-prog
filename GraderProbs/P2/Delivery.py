@@ -2,6 +2,7 @@ def dayInMonth(month: int, year: int) -> int:
     days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     if month != 2:
         return days[month - 1]
+    year -= 543
     return days[1] + (year%400 == 0 or (year%4 == 0 and year%100 != 0))
 
 def validate(dtype: str, day: int, month: int, year: int) -> str:
@@ -17,7 +18,6 @@ while True:
     if raw == "END": break
 
     iid, dtype, day, month, year = raw.split()
-    iid = int(iid)
     day = int(day)
     month = int(month)
     year = int(year)
@@ -41,7 +41,7 @@ while True:
             month = 1
             year += 1
         
-        packages.append([year, month, day, iid])
+        packages.append([year, month, newDay, iid])
 
 packages = sorted(packages)
 
