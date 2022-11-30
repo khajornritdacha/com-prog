@@ -1,7 +1,0 @@
-{
-    "python.formatting.provider": "black",
-    "files.associations": {
-        "sstream": "c",
-        "regex": "c"
-    }
-}
